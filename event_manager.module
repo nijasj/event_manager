@@ -1,0 +1,84 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+use Drupal\views\ViewExecutable;
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_entity_insert().
+ */
+function event_manager_event_insert(EntityInterface $entity) {
+  // Check if the entity is of the type you want to send an email for.
+  if ($entity->getEntityTypeId() == 'event') {
+          $mailManager = \Drupal::service('plugin.manager.mail');
+	  $config = \Drupal::config('system.site');
+	  $site_email = $config->get('mail');
+
+	  $module = 'event_manager';
+	  $key = 'new_event_created';
+	  $to = $site_email;
+	  $params['message'] = 'A new event has been created.';
+	  $params['entity'] = $entity;
+	  $langcode = \Drupal::currentUser()->getPreferredLangcode();
+	  $send = true;
+
+	  $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+
+	  if ($result['result'] !== true) {
+	    \Drupal::logger('event_manager')->error('There was a problem sending the email notification.');
+	  } else {
+	    \Drupal::logger('event_manager')->notice('Email notification sent.');
+	  }
+  }
+}
+
+
+
+/**
+ * Implements hook_mail().
+ */
+function event_manager_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'new_event_created':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = t('New event Created');
+      $message['body'][] = t($params['message']);
+      break;
+  }
+}
+/**
+ * Implements hook_views_query_alter().
+ */
+function event_manager_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+    // Check if the view ID and display ID match the "upcoming events" view.
+    if ($view->id() == 'upcoming_events' && $view->getDisplay()->display['id'] == 'page_1') {
+        // Get the current timestamp.
+        $current_time = \Drupal::time()->getRequestTime();
+        $formatted_time = date('Y-m-d H:i:s', $current_time);
+    
+        // Ensure we add the field data join.
+        // The event_datetime field data table should be joined correctly in the view.
+        // Add a condition to show only events with an event date greater than or equal to the current time.
+        $query->addWhereExpression(0, 'event.event_datetime > :current_time', [':current_time' => $formatted_time]);
+    
+        // Ensure that only published events are displayed.
+        $query->addWhere(0, 'event.status', '1', '=');
+        $view->setItemsPerPage(5);
+      }
+    }
+
+    /**
+ * Implements hook_theme().
+ */
+function event_manager_theme($existing, $type, $theme, $path) {
+    return [
+      'next_upcoming_event' => [
+        'variables' => [
+          'event' => NULL,
+        ],
+      ],
+    ];
+  }
+  

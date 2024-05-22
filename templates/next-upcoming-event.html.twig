@@ -1,0 +1,12 @@
+{% if event %}
+  <div class="next-upcoming-event">
+    <h3>{{ event.name }}</h3>
+    <p>{{ event.description }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Date and Time:</strong> {{ event.datetime }}</p>
+  </div>
+{% else %}
+  <div class="next-upcoming-event">
+    <p>No upcoming events found.</p>
+  </div>
+{% endif %}

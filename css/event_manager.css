@@ -1,0 +1,32 @@
+/* Style for the Next Upcoming Event block */
+
+
+.next-upcoming-event {
+    background-color: #0d77b5;
+    border: 1px solid #f7f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+ 
+  .next-upcoming-event h3 {
+    font-size: 20px;
+    color: #f7f9fa;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .next-upcoming-event p {
+    font-size: 16px;
+    color: #f7f9fa;
+    margin-bottom: 10px;
+  }
+  
+  .next-upcoming-event p strong {
+    color: #f7f9fa;
+  }
+  
+  .next-upcoming-event p:last-child {
+    margin-bottom: 0; /* Remove bottom margin from the last paragraph */
+  }
+  

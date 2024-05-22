@@ -1,0 +1,24 @@
+
+administer event entities:
+  title: 'Administer Event entities'
+
+view published event entities:
+  title: 'View published Event User entities'
+
+view unpublished event entities:
+  title: 'View unpublished Event entities'
+
+add event entities:
+  title: 'Create new Event entities'
+
+delete event entities:
+  title: 'Delete Event entities'
+
+edit event entities:
+  title: 'Edit Event entities'
+
+add event:
+  title: 'Add Event'
+  description: 'Permission to add events'
+
+

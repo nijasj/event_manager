@@ -1,0 +1,7 @@
+event_manager.add_event:
+  path: '/add-event'
+  defaults:
+    _form: '\Drupal\event_manager\Form\AddEventEntityForm'
+    _title: 'Add Event'
+  requirements:
+    _permission: 'add event'

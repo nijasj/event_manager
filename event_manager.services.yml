@@ -1,0 +1,5 @@
+services:
+  event_manager.mail:
+    class: Drupal\event_manager\EventMail
+    tags:
+      - { name: plugin.manager.mail }

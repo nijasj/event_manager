@@ -1,0 +1,9 @@
+
+# Event menu items definition
+entity.event.collection:
+  title: 'Event Details'
+  route_name: entity.event.collection
+  description: 'List Event entities'
+  parent: system.admin_structure
+  weight: 101
+

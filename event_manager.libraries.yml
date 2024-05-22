@@ -1,0 +1,6 @@
+# File name: event_manager.libraries.yml
+event_manager:
+  version: 1.x
+  css:
+    theme:
+      css/event_manager.css: {}

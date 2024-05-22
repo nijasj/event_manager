@@ -1,0 +1,8 @@
+name: 'Event data entity'
+type: module
+description: 'Create custom entities for Event data'
+package: 'Custom Module'
+core_version_requirement: ^9 || ^10
+dependencies:
+  - drupal:system
+  - views
